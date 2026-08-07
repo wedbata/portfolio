@@ -1,0 +1,24 @@
+GEORGE — Front-End Developer
+Founder, Vibe Code Internet Service (iTech-Wau)
+Cairo, Egypt | itechwau@gmail.com | +20 155 833 4908 | github.com/WedBata
+
+PROFILE
+Front-end developer with 3+ years building fast, responsive web products for
+clients across Egypt and South Sudan. 25+ projects delivered, 15+ clients.
+
+SKILLS
+HTML5, CSS3, JavaScript (ES2023), React, Next.js, Tailwind CSS, Git,
+Figma, REST APIs, Vercel deployment, performance optimisation.
+
+EXPERIENCE
+Founder & Front-End Developer — Vibe Code Internet Service (2023–present)
+  Design, build, host and maintain websites and web apps for small businesses.
+Freelance Front-End Developer (2022–2023)
+  Delivered marketing sites, dashboards and e-commerce storefronts.
+
+SELECTED PROJECTS
+  JubaDelivery — multi-vendor delivery platform (React, Tailwind, Stripe)
+  Ireneo School Admin — school management system (Next.js, TypeScript)
+  Restaurant Booking — reservation system (Next.js, Tailwind)
+
+References available on request.
