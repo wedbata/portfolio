@@ -14,6 +14,7 @@ export default defineTool({
       .describe("Optional category filter."),
   },
   annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
+  outputSchema: { projects: z.array(z.record(z.string(), z.unknown())) },
   handler: ({ category }) => {
     const rows = category ? projects.filter((p) => p.category === category) : projects;
     return {
