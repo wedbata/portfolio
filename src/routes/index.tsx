@@ -26,6 +26,47 @@ export const Route = createFileRoute("/")({
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
+    links: [{ rel: "canonical", href: "https://itechwau.lovable.app/" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Person",
+          name: "George",
+          jobTitle: "Front-End Developer",
+          url: "https://itechwau.lovable.app/",
+          email: "mailto:itechwau@gmail.com",
+          address: { "@type": "PostalAddress", addressLocality: "Cairo", addressCountry: "EG" },
+          sameAs: [
+            "https://github.com/WedBata",
+            "https://www.linkedin.com/in/wedbata",
+            "https://twitter.com/WedBata",
+          ],
+          worksFor: { "@type": "Organization", name: "Vibe Code Internet Service" },
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "LocalBusiness",
+          name: "Vibe Code Internet Service",
+          description:
+            "Front-end development, UI/UX design, hosting and domain solutions for growing businesses.",
+          url: "https://itechwau.lovable.app/",
+          email: "itechwau@gmail.com",
+          telephone: "+20 155 833 4908",
+          founder: { "@type": "Person", name: "George" },
+          address: {
+            "@type": "PostalAddress",
+            addressLocality: "Cairo",
+            addressCountry: "EG",
+          },
+          areaServed: "Cairo, Egypt",
+        }),
+      },
+    ],
   }),
   component: Index,
 });
