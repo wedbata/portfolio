@@ -25,7 +25,9 @@ export function describeError(error: unknown): string {
     }
     const label = depth === 0 ? "" : "caused by: ";
     const status = describeStatus(current);
-    parts.push(`${label}${(current as Error).stack ?? `${(current as Error).name}: ${(current as Error).message}`}${status}`);
+    parts.push(
+      `${label}${(current as Error).stack ?? `${(current as Error).name}: ${(current as Error).message}`}${status}`,
+    );
     current = (current as any).cause;
   }
   return parts.join("\n").slice(0, DESCRIPTION_LENGTH_LIMIT);

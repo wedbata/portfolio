@@ -8,7 +8,9 @@ export function Services() {
     <section id="services" className="scroll-mt-24 py-24">
       <div className="mx-auto max-w-6xl px-5">
         <div className="reveal mx-auto max-w-2xl text-center">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-secondary">Services</p>
+          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-secondary">
+            Services
+          </p>
           <h2 className="mt-3 text-3xl font-bold sm:text-4xl">What I can build for you</h2>
           <p className="mt-4 text-muted-foreground">
             Three ways to work together — pick one, or let Vibe Code handle the whole journey from
