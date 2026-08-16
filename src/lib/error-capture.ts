@@ -116,11 +116,19 @@ try {
   // Final safety net — module init must never throw.
 }
 
-if (typeof globalThis.addEventListener === "function") {
-  globalThis.addEventListener("error", (event) => record((event as ErrorEvent).error ?? event));
-  globalThis.addEventListener("unhandledrejection", (event) =>
-    record((event as PromiseRejectionEvent).reason),
-  );
+const LISTENERS_KEY = "__itechwau_errorListenersInstalled";
+
+try {
+  const store = globalThis as unknown as Record<string, unknown>;
+  if (store[LISTENERS_KEY] !== true && typeof globalThis.addEventListener === "function") {
+    globalThis.addEventListener("error", (event) => record((event as ErrorEvent).error ?? event));
+    globalThis.addEventListener("unhandledrejection", (event) =>
+      record((event as PromiseRejectionEvent).reason),
+    );
+    store[LISTENERS_KEY] = true;
+  }
+} catch {
+  // Listener registration is best-effort.
 }
 
 export function consumeLastCapturedError(): unknown {
