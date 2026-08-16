@@ -25,8 +25,8 @@ export function describeError(error: unknown): string {
     }
     const label = depth === 0 ? "" : "caused by: ";
     const status = describeStatus(current);
-    parts.push(`${label}${current.stack ?? `${current.name}: ${current.message}`}${status}`);
-    current = current.cause;
+    parts.push(`${label}${(current as Error).stack ?? `${(current as Error).name}: ${(current as Error).message}`}${status}`);
+    current = (current as any).cause;
   }
   return parts.join("\n").slice(0, DESCRIPTION_LENGTH_LIMIT);
 }
@@ -52,15 +52,57 @@ function isErrorLike(value: unknown): value is Error {
 // Wrap console.error so errors logged by any layer — including h3's internal
 // unhandled-error logging, which this file cannot hook directly — are both
 // recorded for consumeLastCapturedError and expanded before serialization.
-const originalConsoleError = console.error.bind(console);
-console.error = (...args: unknown[]) => {
-  const expanded = args.map((arg) => {
-    if (!isErrorLike(arg)) return arg;
-    record(arg);
-    return describeError(arg);
-  });
-  originalConsoleError(...expanded);
-};
+//
+// Make the override defensive and idempotent: preserve the original console.error
+// in a global guard and only wrap once. If the runtime prohibits reassignment,
+// fail silently and continue to function without the wrapper.
+const GLOBAL_ORIGINAL_KEY = "__itechwau_originalConsoleError";
+const GLOBAL_WRAPPED_FLAG = "__itechwau_consoleErrorWrapped";
+
+if (!(globalThis as any)[GLOBAL_ORIGINAL_KEY]) {
+  try {
+    // capture original console.error (bound to console)
+    (globalThis as any)[GLOBAL_ORIGINAL_KEY] = console.error.bind(console);
+  } catch {
+    // accessing/binding console methods may throw in some strict runtimes; continue
+    // without the guard — we'll attempt to read console.error directly later.
+  }
+}
+
+const originalConsoleError: (...args: unknown[]) => void =
+  (globalThis as any)[GLOBAL_ORIGINAL_KEY] ?? console.error.bind(console);
+
+try {
+  if (!(console as any)[GLOBAL_WRAPPED_FLAG]) {
+    const wrapped = (...args: unknown[]) => {
+      const expanded = args.map((arg) => {
+        if (!isErrorLike(arg)) return arg;
+        record(arg);
+        return describeError(arg);
+      });
+      try {
+        originalConsoleError(...expanded);
+      } catch {
+        // If calling originalConsoleError fails for some reason, fallback to the current console.error
+        try {
+          (console as any).__original?.apply(console, expanded);
+        } catch {
+          // swallow to avoid crashing logging itself
+        }
+      }
+    };
+
+    // Reassign in a try/catch because some environments make console methods read-only.
+    try {
+      (console as any).error = wrapped;
+      (console as any)[GLOBAL_WRAPPED_FLAG] = true;
+    } catch {
+      // Unable to replace console.error — leave runtime as-is.
+    }
+  }
+} catch {
+  // Final safety net — never throw during module initialization.
+}
 
 if (typeof globalThis.addEventListener === "function") {
   globalThis.addEventListener("error", (event) => record((event as ErrorEvent).error ?? event));
