@@ -1,14 +1,18 @@
 {
   "name": "tanstack_start_ts",
   "private": true,
-  "sideEffects": false,
+  "sideEffects": [
+    "**/*.css",
+    "**/*.scss",
+    "**/*.less"
+  ],
   "type": "module",
   "scripts": {
     "dev": "vite dev",
     "build": "vite build",
     "build:dev": "vite build --mode development",
     "preview": "vite preview",
-    "lint": "eslint .",
+    "lint": "eslint --ext .ts,.tsx,.js,.jsx .",
     "format": "prettier --write ."
   },
   "dependencies": {
@@ -82,7 +86,8 @@
     "nitro": "3.0.260603-beta",
     "prettier": "^3.7.3",
     "typescript": "^5.8.3",
-    "typescript-eslint": "^8.56.1",
+    "@typescript-eslint/eslint-plugin": "^8.56.1",
+    "@typescript-eslint/parser": "^8.56.1",
     "vite": "^8.2.0"
   }
 }
