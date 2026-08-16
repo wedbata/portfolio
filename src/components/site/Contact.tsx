@@ -1,6 +1,16 @@
 import { useState, type FormEvent } from "react";
 import { z } from "zod";
-import { Mail, Phone, MapPin, Send, CheckCircle2, Github, Linkedin, Twitter, MessageCircle } from "lucide-react";
+import {
+  Mail,
+  Phone,
+  MapPin,
+  Send,
+  CheckCircle2,
+  Github,
+  Linkedin,
+  Twitter,
+  MessageCircle,
+} from "lucide-react";
 
 const schema = z.object({
   name: z.string().trim().min(2, "Please enter your name").max(100, "Name is too long"),

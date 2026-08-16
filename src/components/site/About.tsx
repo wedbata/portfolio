@@ -56,7 +56,9 @@ export function About() {
         </div>
 
         <div className="reveal">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-secondary">About me</p>
+          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-secondary">
+            About me
+          </p>
           <h2 className="mt-3 text-3xl font-bold sm:text-4xl">
             Front-end developer, founder of Vibe Code
           </h2>

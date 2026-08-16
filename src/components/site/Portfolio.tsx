@@ -17,8 +17,8 @@ export function Portfolio() {
           </p>
           <h2 className="mt-3 text-3xl font-bold sm:text-4xl">Selected work</h2>
           <p className="mt-4 text-muted-foreground">
-            Real products shipped for real clients — delivery platforms, school systems and
-            business sites.
+            Real products shipped for real clients — delivery platforms, school systems and business
+            sites.
           </p>
         </div>
 
